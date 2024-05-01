@@ -1,31 +1,13 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
-
-const AppContext = createContext(null);
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export const useAuth = (): {
   userId: string;
   setUserId: (userId: string) => void;
 } => {
-  const context = useContext(AppContext);
+  const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-};
-
-export const AuthProvider = ({ children }) => {
-  const [userId, setUserId] = useState<string | null>(null);
-  const appContextValue = useMemo(
-    () => ({
-      userId,
-      setUserId,
-    }),
-    [userId]
-  );
-
-  return (
-    <AppContext.Provider value={appContextValue}>
-      {children}
-    </AppContext.Provider>
-  );
 };
