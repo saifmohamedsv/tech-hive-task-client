@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Button, Input, ListItem } from "react-native-elements";
+import { TechHiveAPI } from "../api/axios";
 import { useAuth } from "../hooks/useAuth";
 
 const TodoScreen = () => {
@@ -12,9 +13,7 @@ const TodoScreen = () => {
   const fetchTodos = async () => {
     if (userId) {
       try {
-        const response = await axios.get(
-          process.env.EXPO_PUBLIC_BASE_API_URL + `todos/${userId}`
-        );
+        const response = await TechHiveAPI.get(`/todos/${userId}`);
         setTodos(response.data);
       } catch (error) {
         console.error(error);
@@ -29,7 +28,7 @@ const TodoScreen = () => {
   const handleAddTodo = async () => {
     if (userId) {
       try {
-        await axios.post(process.env.EXPO_PUBLIC_BASE_API_URL + "todos", {
+        await TechHiveAPI.post("/todos", {
           userId,
           task,
         });
@@ -43,9 +42,7 @@ const TodoScreen = () => {
 
   const handleRemoveTodo = async (todoId) => {
     try {
-      await axios.delete(
-        process.env.EXPO_PUBLIC_BASE_API_URL + `todos/${todoId}`
-      );
+      await TechHiveAPI.delete(`/todos/${todoId}`);
       fetchTodos();
     } catch (error) {
       console.error(error);
