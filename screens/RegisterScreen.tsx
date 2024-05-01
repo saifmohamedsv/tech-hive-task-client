@@ -1,12 +1,13 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useState } from "react";
 import { Button, View } from "react-native";
 import { Icon, Input } from "react-native-elements";
+import { useAuth } from "../hooks/useAuth";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserId } = useAuth();
 
   const handleRegister = async () => {
     try {
@@ -17,8 +18,7 @@ const RegisterScreen = ({ navigation }) => {
           password,
         }
       );
-      await AsyncStorage.setItem("userId", response.data.id);
-      navigation.navigate("Todo");
+      setUserId(response.data.id);
     } catch (error) {
       console.error(error);
     }
@@ -40,6 +40,10 @@ const RegisterScreen = ({ navigation }) => {
         onChangeText={setPassword}
       />
       <Button title="Register" onPress={handleRegister} />
+      <Button
+        title="Already have an account? Login"
+        onPress={() => navigation.navigate("Login")}
+      />
     </View>
   );
 };

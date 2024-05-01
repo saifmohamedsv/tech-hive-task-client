@@ -1,15 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Button, Input, ListItem } from "react-native-elements";
+import { useAuth } from "../hooks/useAuth";
 
 const TodoScreen = () => {
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
+  const { userId, setUserId } = useAuth();
 
   const fetchTodos = async () => {
-    const userId = await AsyncStorage.getItem("userId");
     if (userId) {
       try {
         const response = await axios.get(
@@ -27,7 +27,6 @@ const TodoScreen = () => {
   }, []);
 
   const handleAddTodo = async () => {
-    const userId = await AsyncStorage.getItem("userId");
     if (userId) {
       try {
         await axios.post(process.env.EXPO_PUBLIC_BASE_API_URL + "todos", {
@@ -88,6 +87,7 @@ const TodoScreen = () => {
           </ListItem>
         )}
       />
+      <Button title="Logout" onPress={() => setUserId(null)} />
     </SafeAreaView>
   );
 };
