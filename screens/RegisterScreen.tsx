@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Button, View } from "react-native";
 import { Icon, Input } from "react-native-elements";
+import { TechHiveAPI } from "../api/axios";
 import { useAuth } from "../hooks/useAuth";
 
 const RegisterScreen = ({ navigation }) => {
@@ -11,13 +11,10 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(
-        process.env.EXPO_PUBLIC_BASE_API_URL + "register",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await TechHiveAPI.post("/register", {
+        email,
+        password,
+      });
       setUserId(response.data.id);
     } catch (error) {
       console.error(error);
