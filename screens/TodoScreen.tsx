@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { Button, Input, ListItem } from "react-native-elements"; // Import components from React Native Elements
+import { Button, Input, ListItem } from "react-native-elements";
 
 const TodoScreen = () => {
   const [task, setTask] = useState("");
