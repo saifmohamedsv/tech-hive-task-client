@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Button, Input, ListItem } from "react-native-elements"; // Import components from React Native Elements
 
 const TodoScreen = () => {
@@ -54,21 +54,23 @@ const TodoScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ margin: 20 }}>Todo List</Text>
-      <Input
-        placeholder="Add Task"
-        value={task}
-        onChangeText={setTask}
-        rightIcon={
-          <Button
-            title="Add"
-            onPress={handleAddTodo}
-            buttonStyle={{ backgroundColor: "green" }}
-            titleStyle={{ color: "white" }}
-          />
-        }
-      />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Todo List</Text>
+        <Input
+          placeholder="Add Task"
+          value={task}
+          onChangeText={setTask}
+          rightIcon={
+            <Button
+              title="Add"
+              onPress={handleAddTodo}
+              buttonStyle={{ backgroundColor: "green" }}
+              titleStyle={{ color: "white" }}
+            />
+          }
+        />
+      </View>
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id}
@@ -86,8 +88,20 @@ const TodoScreen = () => {
           </ListItem>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  title: {
+    marginBottom: 10,
+  },
+});
 export default TodoScreen;
