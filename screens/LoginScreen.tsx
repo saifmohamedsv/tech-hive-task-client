@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, View } from "react-native";
 import { Icon, Input } from "react-native-elements";
 
 const LoginScreen = ({ navigation }) => {
@@ -11,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        process.env.EXPO_PUBLIC_BASE_API_URL + "/login",
+        process.env.EXPO_PUBLIC_BASE_API_URL + "login",
         {
           email,
           password,
@@ -26,7 +26,6 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ marginBottom: 20 }}>Login</Text>
       <Input
         autoCapitalize="none"
         placeholder="Email"
